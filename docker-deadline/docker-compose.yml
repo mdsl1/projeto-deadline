@@ -22,6 +22,7 @@ services:
     volumes:
       - ../api:/app
       - /app/node_modules
+      - ./uploads:/app/uploads
     depends_on:
       - db
     networks:
