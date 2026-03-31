@@ -1,0 +1,15 @@
+@import "tailwindcss";
+:root {
+  font-family: 'Segoe UI', system-ui, Roboto, sans-serif;
+  letter-spacing: 0.18px;
+}
+body {
+  margin: 0;
+}
+#root {
+  min-width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
