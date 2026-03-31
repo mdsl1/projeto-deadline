@@ -29,3 +29,5 @@ export const atividadeSchema = new Schema({
     anexo: { type: String },
     criado: { type: Date, default: Date.now }
 });
+
+export const Atividade = mongoose.model("Atividade", atividadeSchema, "atividades");
