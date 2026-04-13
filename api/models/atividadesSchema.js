@@ -3,6 +3,11 @@ import mongoose, { Schema } from "mongoose";
 export const atividadeSchema = new Schema({
     titulo: { type: String, required: true },
     descricao: { type: String, required: true },
+    id_disciplina: { 
+        type: Schema.Types.ObjectId, 
+        ref: "Disciplina", // Referência para o outro Model
+        required: true 
+    },
     disciplina: { type: String, required: true },
     professor: {
         nome: { type: String, required: true },
