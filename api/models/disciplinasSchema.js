@@ -21,4 +21,4 @@ export const disciplinaSchema = new Schema({
     criado: { type: Date, default: Date.now }
 });
 
-export const Disciplina = new Model("Disciplina", disciplinaSchema, "disciplinas");
+export const Disciplina = mongoose.model("Disciplina", disciplinaSchema, "disciplinas");
