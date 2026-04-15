@@ -1,15 +1,16 @@
 import { Disciplina } from "../models/disciplinasSchema.js";
 // Criar
 export async function CriarDisciplina( dados ) {
-    const isEmail = dados.professor.forma_envio === "E-mail";
+    const forma_envio = dados.forma_envio;
 
     const valores = {
         ...dados,
         professor: {
             nome: dados.professor.nome,
-            forma_envio: dados.professor.forma_envio,
-            ...(isEmail ? { email: dados.professor.email } : { url: dados.professor.url })
-        }
+            // Lógica condicional: só insere se a forma de envio pedir e se o dado existir na disciplina
+            ...(forma_envio === "E-mail" ? { email: dados.professor.email } : {}),
+            ...(forma_envio === "Classroom" ? { url: dados.professor.url } : {})
+        },
     };
 
     const newDisciplina = new Disciplina( valores );
@@ -36,18 +37,6 @@ export async function AlterarDisciplina( id, dados ) {
     if (!disciplinaAntiga) throw new Error( "Disciplina não encontrada para alteração." );
 
     let valores = { ... dados };
-
-    if (dados.professor && dados.professor.forma_envio) {
-        const isEmail = dados.professor.forma_envio === "E-mail";
-
-        valores.professor = {
-            nome: dados.professor.nome || disciplinaAntiga.professor.nome,
-            forma_envio: dados.professor.forma_envio,
-            ...(isEmail 
-                ? { email: dados.professor.email, url: undefined } 
-                : { url: dados.professor.url, email: undefined })
-        };
-    }
 
     return await Disciplina.findByIdAndUpdate(
         id,

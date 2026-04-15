@@ -4,20 +4,20 @@ import fs from "fs";
 
 // Criar
 export async function CriarAtividade( dados, anexo ) {
-    
-    const is_email = dados.forma_envio === "E-mail";
     const infosDisciplina = await ListarDisciplinaPorId( dados.id_disciplina );
 
     if (!infosDisciplina) throw new Error( "A disciplina informada não foi encontrada." );
     
+    const forma_envio = dados.forma_envio;
 
     const valores = {
         ...dados,
         disciplina: infosDisciplina.disciplina,
         professor: {
             nome: infosDisciplina.professor.nome,
-            forma_envio: infosDisciplina.professor.forma_envio,
-            ...(is_email ? { email: infosDisciplina.professor.email } : { url: infosDisciplina.professor.url })
+            // Lógica condicional: só insere se a forma de envio pedir e se o dado existir na disciplina
+            ...(forma_envio === "E-mail" ? { email: infosDisciplina.professor.email } : {}),
+            ...(forma_envio === "Classroom" ? { url: infosDisciplina.professor.url } : {})
         },
         anexo: anexo ? anexo.path : null
     };

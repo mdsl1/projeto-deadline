@@ -6,9 +6,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("<h1>API do projeto Deadline</h1>");
-});
+import rootRouter from "./routes/rootRouter.js";
+app.use("/api", rootRouter);
+
+import atividadesRouter from "./routes/atividadesRouter.js";
+app.use("/api/atividades", atividadesRouter);
+
+import disciplinasRouter from "./routes/disciplinasRouter.js";
+app.use("/api/disciplinas", disciplinasRouter);
 
 const port = 3000;
 try {

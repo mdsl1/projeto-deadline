@@ -1,7 +1,13 @@
 export function tratarErro (res, er, acao) {
     // Se for erro do Zod, pegamos a primeira mensagem de validação
-    if (er.name === "ZodError") {
-        return res.status(400).json({ mensagem: er.errors[0].message });
+    if (er.name === "ZodError" || er.issues) {
+        const mensagemAmigavel = er.issues?.[0]?.message || "Dados inválidos enviados.";
+        const campoComErro = er.issues?.[0]?.path?.join(".") || "campo";
+
+        return res.status(400).json({
+            mensagem: `Erro de validação no campo [${campoComErro}]: ${mensagemAmigavel}`,
+            detalhes: er.issues
+        });
     }
 
     // Se o erro tiver uma mensagem que nós definimos no Service (ex: "Atividade não encontrada")

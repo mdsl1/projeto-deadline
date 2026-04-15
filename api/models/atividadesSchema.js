@@ -9,21 +9,15 @@ export const atividadeSchema = new Schema({
         required: true 
     },
     disciplina: { type: String, required: true },
+    forma_envio: { 
+        type: String,
+        required: true,
+        enum: [ "E-mail", "Presencial", "Classroom", "Outro" ]
+    },
     professor: {
         nome: { type: String, required: true },
-        forma_envio: { 
-            type: String,
-            required: true,
-            enum: [ "E-mail", "Presencial", "Classroom", "Outro" ]
-        },
-        email: { 
-            type: String, 
-            required: function() { return this.professor.forma_envio === "E-mail"; } 
-        },
-        url: { 
-            type: String, 
-            required: function() { return this.professor.forma_envio === "Classroom"; } 
-        }
+        email: { type: String },
+        url: { type: String }
     },
     prazo: { type: Date, required: true },
     status: { 

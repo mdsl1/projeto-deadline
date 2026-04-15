@@ -4,19 +4,8 @@ export const disciplinaSchema = new Schema({
     disciplina: { type: String, required: true },
     professor: {
         nome: { type: String, required: true },
-        forma_envio: { 
-            type: String,
-            required: true,
-            enum: [ "E-mail", "Classroom" ]
-        },
-        email: { 
-            type: String, 
-            required: function() { return this.professor.forma_envio === "E-mail"; } 
-        },
-        url: { 
-            type: String, 
-            required: function() { return this.professor.forma_envio === "Classroom"; } 
-        }
+        email: { type: String, default: null },
+        url: { type: String, default: null }
     },
     criado: { type: Date, default: Date.now }
 });
