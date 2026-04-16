@@ -38,6 +38,13 @@ export async function AlterarDisciplina( id, dados ) {
 
     let valores = { ... dados };
 
+    if (dados.professor) {
+        Object.keys(dados.professor).forEach(key => {
+            valores[`professor.${key}`] = dados.professor[key];
+        });
+        delete valores.professor;
+    }
+
     return await Disciplina.findByIdAndUpdate(
         id,
         { $set: valores },

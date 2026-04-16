@@ -16,10 +16,10 @@ export const disciplinaSchemaZod = z.object({
     disciplina: z.string().min(2, "O nome da disciplina é muito curto"),
     forma_envio: z.enum(["E-mail", "Classroom"]),
     professor: z.object({
-        nome: z.string().min(3, "O nome do professor é obrigatório"),
+        nome: z.string().min(3).optional(),
         email: z.string().email("E-mail inválido").optional(),
         url: z.string().url("URL inválida").optional()
-    })
+    }).optional()
 }).strict();
 
 export const disciplinaUpdateSchemaZod = disciplinaSchemaZod.partial().strict();
